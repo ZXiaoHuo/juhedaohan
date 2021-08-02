@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div th:fragment="header(item)">
+    <div class="layui-header header">
+        <div class="main">
+            <ul class="layui-nav layui-nav-left" lay-filter="filter">
+                <a class="logo" th:href="@{/}" title="聚合导航"
+                   style="color: white;font-size: 24px;font-weight: 600">聚合导航</a>
+                <li th:classappend="${item=='index'?'layui-this'+' layui-nav-item nav-left':' layui-nav-item nav-left'}">
+                    <a th:href="@{/admin}">首页</a>
+                </li>
+                <li th:classappend="${item=='type'?'layui-this'+' layui-nav-item':' layui-nav-item'}">
+                    <a th:href="@{/admin/type}">链接类型</a>
+                </li>
+                <li th:classappend="${item=='link'?'layui-this'+' layui-nav-item':' layui-nav-item'}">
+                    <a th:href="@{/admin/link}">链接管理</a>
+                </li>
+                <li th:classappend="${item=='search'?'layui-this'+' layui-nav-item':' layui-nav-item'}">
+                    <a th:href="@{/admin/search}">搜索源</a>
+                </li>
+                <li th:classappend="${item=='project'?'layui-this'+' layui-nav-item':' layui-nav-item'}">
+                    <a th:href="@{/admin}">项目管理</a>
+                </li>
+            </ul>
+            <ul class="layui-nav layui-layout-right layui-nav-right" lay-filter="filter">
+
+                <!--<li class="layui-nav-item">
+                    <a href="#">我的主页<span class="layui-badge-dot"></span></a>
+                </li>-->
+                <li class="layui-nav-item">
+                    <a href="javascript:;"><img th:src="@{~/images/head.jpg}" class="layui-nav-img">我</a>
+                    <dl class="layui-nav-child">
+                        <dd><a th:href="@{/logout}">退出</a></dd>
+                    </dl>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<div th:fragment="footer">
+  <div class="footer" style="margin-top: 20px">
+    <hr class="layui-bg-blue">
+    <p><a href="https://baidu.com/">百度</a> 2021 &copy; <a href="#">baidu.com</a></p>
+    <p>聚合导航</p>
+  </div>
+</div>
+
+<div th:fragment="time">
+    <div class="back">
+        <div class="content">
+            <div class="one">
+                <div class="part-1"></div>
+                <div class="part-2"></div>
+                <div class="part-3"></div>
+                <div class="part-4"></div>
+                <div class="part-5"></div>
+                <div class="part-6"></div>
+                <div class="part-7"></div>
+            </div>
+            <div class="two">
+                <div class="part-1"></div>
+                <div class="part-2"></div>
+                <div class="part-3"></div>
+                <div class="part-4"></div>
+                <div class="part-5"></div>
+                <div class="part-6"></div>
+                <div class="part-7"></div>
+            </div>
+            <div class="three">
+                <div class="point-1"></div>
+                <div class="point-2"></div>
+            </div>
+            <div class="four">
+                <div class="part-1"></div>
+                <div class="part-2"></div>
+                <div class="part-3"></div>
+                <div class="part-4"></div>
+                <div class="part-5"></div>
+                <div class="part-6"></div>
+                <div class="part-7"></div>
+            </div>
+            <div class="five">
+                <div class="part-1"></div>
+                <div class="part-2"></div>
+                <div class="part-3"></div>
+                <div class="part-4"></div>
+                <div class="part-5"></div>
+                <div class="part-6"></div>
+                <div class="part-7"></div>
+            </div>
+            <div class="six">
+                <div class="point-1"></div>
+                <div class="point-2"></div>
+            </div>
+            <div class="seven">
+                <div class="part-1"></div>
+                <div class="part-2"></div>
+                <div class="part-3"></div>
+                <div class="part-4"></div>
+                <div class="part-5"></div>
+                <div class="part-6"></div>
+                <div class="part-7"></div>
+            </div>
+            <div class="eight">
+                <div class="part-1"></div>
+                <div class="part-2"></div>
+                <div class="part-3"></div>
+                <div class="part-4"></div>
+                <div class="part-5"></div>
+                <div class="part-6"></div>
+                <div class="part-7"></div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
+
+<script>
+
+</script>
+
+<style>
+
+</style>

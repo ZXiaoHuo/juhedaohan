@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+  <script th:src="@{~/js/jquery/jquery-2.1.4.min.js}" type="text/javascript"></script>
+  <!-- 引入 layui.css -->
+  <link rel="stylesheet" href="//unpkg.com/layui@2.6.8/dist/css/layui.css"/>
+
+  <!-- 引入 layui.js -->
+  <script src="//unpkg.com/layui@2.6.8/dist/layui.js"/>
+  <script type="text/javascript">
+    layui.use(['table', 'layer'], function () {
+      var table = layui.table
+              , layer = layui.layer
+              , $ = layui.jquery
+              , form = layui.form;
+      layer.msg("123")
+      /*reloadTable = function (accountNumber, name, phone, sn, regionName,deptName) {
+        table.reload('dateTable', {
+          url: '/business/whiteList/tableData'
+          , where: {accountNumber: accountNumber, name: name, phone: phone, sn: sn, regionName: regionName,deptName:deptName} //设定异步数据接口的额外参数
+          , page: {
+            curr: 1 //重新从第 1 页开始
+          }
+        });
+      };
+
+      form.on('submit(search)', function (data) {
+        reloadTable(data.field.accountNumber, data.field.name, data.field.phone, data.field.sn, data.field.regionName,data.field.deptName);
+        return false; //阻止表单跳转。如果需要表单跳转，去掉这段即可。
+      });*/
+      table.on('toolbar(dateTable)', function (obj) {
+        switch (obj.event) {
+          case 'add':
+            layer.msg("add")
+                /*pop_show('添加白名单', '/business/whiteList/add?pid='+getCmPersonId(), '', '', function () {
+                  if ($("#handle_status").val() == 1) {
+                    $("#handle_status").val("2");
+                    reloadTable();
+                  }
+                });*/
+        }
+      });
+      //工具条事件
+      table.on('tool(dataTable)', function(obj){ //注：tool 是工具条事件名，test 是 table 原始容器的属性 lay-filter="对应的值"
+        var data = obj.data; //获得当前行数据
+        var layEvent = obj.event; //获得 lay-event 对应的值（也可以是表头的 event 参数对应的值）
+        var tr = obj.tr; //获得当前行 tr 的 DOM 对象（如果有的话）
+
+        if(layEvent === 'detail'){ //查看
+          layer.msg(data.id)//do somehing
+        } else if(layEvent === 'del'){ //删除
+          layer.confirm('真的删除行么', function(index){
+            obj.del(); //删除对应行（tr）的DOM结构，并更新缓存
+            layer.close(index);
+            //向服务端发送删除指令
+          });
+        } else if(layEvent === 'edit'){ //编辑
+          //do something
+          layer.msg(data.id)
+          //同步更新缓存对应的值
+          obj.update({
+            username: '123'
+            ,title: 'xxx'
+          });
+        } else if(layEvent === 'LAYTABLE_TIPS'){
+          layer.alert('Hi，头部工具栏扩展的右侧图标。');
+        }
+      });
+
+    });
+  </script>
+</head>
+<body>
+<div class="layui-container container">
+  <div class="layui-row">
+    <div class="layui-col-md2">
+
+    </div>
+  </div>
+  <div class="layui-row">
+    <div class="layui-col-md12">
+      <script type="text/html" id="btn">
+        <a class="layui-btn layui-btn-xs" id="add" lay-event="add">添加</a>
+      </script>
+      <table class="layui-table" lay-data="{
+        height:'full-90',
+        even:true,
+        size:'lg',
+        toolbar: '#btn',
+        defaultToolbar: ['filter', 'exports', 'print', {
+                title: '提示'
+                , layEvent: 'LAYTABLE_TIPS'
+                , icon: 'layui-icon-tips'
+        }],
+        url:'/admin/type/dataTable',
+        page:true,
+        id:'dataTable',
+        request: {
+            pageName: 'pageNumber' ,
+            limitName: 'pageSize'
+            }
+        }" lay-filter="dataTable">
+        <thead>
+        <tr>
+          <th lay-data="{field:'id', width:80, sort: true}">ID</th>
+          <th lay-data="{field:'name', width:80}">名称</th>
+          <th lay-data="{field:'sort', width:80, sort: true}">排序</th>
+          <th lay-data="{field:'enabled', width:80}">状态</th>
+          <th lay-data="{field:'describes',width:200}">描述</th>
+          <th lay-data="{field:'createTime', sort: true,width:180}">创建时间</th>
+          <th lay-data="{field:'updateTime', sort: true,width:180}">更新时间</th>
+          <th lay-data="{fixed: 'right', width:200, align:'center', toolbar: '#bar'}">操作</th>
+        </tr>
+        </thead>
+      </table>
+    </div>
+  </div>
+</div>
+</body>
+<script type="text/html" id="bar">
+  <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
+  <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+</script>
+</html>
