@@ -59,11 +59,14 @@ public class ShiroConfig {
         map.put("/layui/**","anon");
         map.put("/favicon.ico","anon");
         map.put("/","anon");
+        map.put("/index","anon");
         map.put("/login.html","anon");
         map.put("/login","anon");
+        map.put("/searchList","anon");
+        map.put("/ideaKeys","anon");
         //对所有用户认证
         map.put("/admin","authc");
-        map.put("/**", "authc");
+        //map.put("/**", "authc");
         //登录
         shiroFilterFactoryBean.setLoginUrl("/login.html");
 

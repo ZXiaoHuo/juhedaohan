@@ -45,9 +45,5 @@ public class NavigationController {
         return RestResult.buildSuccess(searchList);
     }
 
-    @RequestMapping("/time")
-    public String time() {
-        return "portal/index";
-    }
 
 }
