@@ -35,7 +35,7 @@ public class NavigationController {
     public String index(Model model) {
         List<LinkGroup> linkGroups = navigationBizService.findLinkGroups();
         model.addAttribute("linkGroups",linkGroups);
-        return "portal/navigation";
+        return "portal/index";
     }
 
     @RequestMapping("/searchList")
@@ -43,6 +43,11 @@ public class NavigationController {
     public RestResult searchList() {
         List<SearchEntity> searchList = navigationBizService.findSearchList();
         return RestResult.buildSuccess(searchList);
+    }
+
+    @RequestMapping("/time")
+    public String time() {
+        return "portal/index";
     }
 
 }
