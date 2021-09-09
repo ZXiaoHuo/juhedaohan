@@ -5,6 +5,7 @@ import com.zqh.juhedaohan.dto.DataTable;
 import com.zqh.juhedaohan.dto.PageResponse;
 import com.zqh.juhedaohan.dto.RestResult;
 import com.zqh.juhedaohan.entity.LinkEntity;
+import com.zqh.juhedaohan.entity.ProjectEntity;
 import com.zqh.juhedaohan.entity.SearchEntity;
 import com.zqh.juhedaohan.entity.TypeEntity;
 import lombok.RequiredArgsConstructor;
@@ -214,6 +215,57 @@ public class AdminController {
         }*/
         try {
             adminBizService.addOrUpdateSearch(searchEntity);
+            return RestResult.buildSuccess();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return RestResult.buildError();
+        }
+    }
+
+    /**
+     *###############
+     *###项目管理 ####
+     *##############
+     */
+    @RequiresRoles("admin")
+    @RequestMapping("/project")
+    public String projectIndex() {
+        return "manager/project/index";
+    }
+
+    @RequiresRoles("admin")
+    @RequestMapping("/project/dataTable")
+    @ResponseBody
+    public DataTable<ProjectEntity> projectTable(Integer pageNumber, Integer pageSize) {
+        PageRequest of = PageRequest.of(pageNumber - 1, pageSize);
+        Page<ProjectEntity> page = adminBizService.findProjectByPage(of);
+        List<ProjectEntity> content = page.getContent();
+        return new DataTable<>(content,(int)page.getTotalElements());
+    }
+
+    @RequiresRoles("admin")
+    @RequestMapping("/project/templet")
+    public String projectTemplet(Long id, Model model) {
+        if (id != null) {
+            try {
+                ProjectEntity projectById = adminBizService.findProjectById(id);
+                model.addAttribute("project",projectById);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        return "manager/project/templet";
+    }
+
+    @RequiresRoles("admin")
+    @RequestMapping("/project/addOrUpdate")
+    @ResponseBody
+    public RestResult projectAddOrUpdate(ProjectEntity projectEntity) {
+        /*if (searchEntity.getEnabled()==null) {
+            searchEntity.setEnabled(true);
+        }*/
+        try {
+            adminBizService.addOrUpdateProject(projectEntity);
             return RestResult.buildSuccess();
         } catch (Exception e) {
             e.printStackTrace();

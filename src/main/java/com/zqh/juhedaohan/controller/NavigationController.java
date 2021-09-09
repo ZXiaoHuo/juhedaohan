@@ -4,6 +4,7 @@ import com.zqh.juhedaohan.business.NavigationBizService;
 import com.zqh.juhedaohan.dto.LinkGroup;
 import com.zqh.juhedaohan.dto.RestResult;
 import com.zqh.juhedaohan.entity.LinkEntity;
+import com.zqh.juhedaohan.entity.ProjectEntity;
 import com.zqh.juhedaohan.entity.SearchEntity;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -34,7 +35,9 @@ public class NavigationController {
     @RequestMapping(value = {"/","/index"})
     public String index(Model model) {
         List<LinkGroup> linkGroups = navigationBizService.findLinkGroups();
+        List<ProjectEntity> projects = navigationBizService.findProjects();
         model.addAttribute("linkGroups",linkGroups);
+        model.addAttribute("projects",projects);
         return "portal/index";
     }
 

@@ -3,8 +3,10 @@ package com.zqh.juhedaohan.business;
 import com.querydsl.core.BooleanBuilder;
 import com.zqh.juhedaohan.dto.LinkGroup;
 import com.zqh.juhedaohan.entity.LinkEntity;
+import com.zqh.juhedaohan.entity.ProjectEntity;
 import com.zqh.juhedaohan.entity.SearchEntity;
 import com.zqh.juhedaohan.service.link.LinkService;
+import com.zqh.juhedaohan.service.project.ProjectService;
 import com.zqh.juhedaohan.service.search.SearchService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -17,6 +19,7 @@ import java.util.List;
 import java.util.Map;
 
 import static com.zqh.juhedaohan.entity.QLinkEntity.linkEntity;
+import static com.zqh.juhedaohan.entity.QProjectEntity.projectEntity;
 import static com.zqh.juhedaohan.entity.QSearchEntity.searchEntity;
 
 
@@ -32,6 +35,7 @@ public class NavigationBizService {
 
     private final LinkService linkService;
     private final SearchService searchService;
+    private final ProjectService projectService;
 
     public List<LinkEntity> findLinks() {
 
@@ -39,6 +43,12 @@ public class NavigationBizService {
         booleanBuilder.and(linkEntity.enabled.eq(true));
         return linkService.findAll(booleanBuilder);
 
+    }
+
+    public List<ProjectEntity> findProjects() {
+        BooleanBuilder booleanBuilder = new BooleanBuilder();
+        booleanBuilder.and(projectEntity.enabled.eq(true));
+        return projectService.findAll(booleanBuilder);
     }
 
     /*

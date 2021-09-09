@@ -1,11 +1,9 @@
 package com.zqh.juhedaohan.business;
 
 import com.querydsl.core.BooleanBuilder;
-import com.zqh.juhedaohan.entity.LinkEntity;
-import com.zqh.juhedaohan.entity.QTypeEntity;
-import com.zqh.juhedaohan.entity.SearchEntity;
-import com.zqh.juhedaohan.entity.TypeEntity;
+import com.zqh.juhedaohan.entity.*;
 import com.zqh.juhedaohan.service.link.LinkService;
+import com.zqh.juhedaohan.service.project.ProjectService;
 import com.zqh.juhedaohan.service.search.SearchService;
 import com.zqh.juhedaohan.service.type.TypeService;
 import lombok.RequiredArgsConstructor;
@@ -34,6 +32,7 @@ public class AdminBizService {
     private final TypeService typeService;
     private final LinkService linkService;
     private final SearchService searchService;
+    private final ProjectService projectService;
 
     public List<TypeEntity> findTypeList() {
         BooleanBuilder booleanBuilder = new BooleanBuilder();
@@ -53,6 +52,10 @@ public class AdminBizService {
         return searchService.findById(id).orElseThrow(Exception::new);
     }
 
+    public ProjectEntity findProjectById(Long id) throws Exception {
+        return projectService.findById(id).orElseThrow(Exception::new);
+    }
+
     public Page<TypeEntity> findTypeByPage(Pageable pageable) {
         return typeService.findAll(pageable);
     }
@@ -63,6 +66,10 @@ public class AdminBizService {
 
     public Page<SearchEntity> findSearchByPage(Pageable pageable) {
         return searchService.findAll(pageable);
+    }
+
+    public Page<ProjectEntity> findProjectByPage(Pageable pageable) {
+        return projectService.findAll(pageable);
     }
 
     @Transactional
@@ -97,5 +104,14 @@ public class AdminBizService {
             searchEntity.setCreateTime(searchById.getCreateTime());
         }
         searchService.save(searchEntity);
+    }
+
+    @Transactional
+    public void addOrUpdateProject(ProjectEntity projectEntity) throws Exception {
+        if (projectEntity.getId() != null) {
+            ProjectEntity projectById = findProjectById(projectEntity.getId());
+            projectEntity.setCreateTime(projectById.getCreateTime());
+        }
+        projectService.save(projectEntity);
     }
 }

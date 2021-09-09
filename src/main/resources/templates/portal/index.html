@@ -29,13 +29,13 @@
         if (event.keyCode == "13") {
           //回车执行查询
           //$('#search_button').click();
-          if ($("#search_input").val()=='') {
+          if ($("#search_input").val() == '') {
             layer.msg("请输入关键词",{time:1000})
           }else {
             //layer.msg($("#search_input").val(),{time:1000})
             var urlPrefix = $('#searchUrlPrefix').val()
             var urlSuffix = $('#searchUrlSuffix').val()
-            if(urlPrefix === null || urlPrefix === "") {
+            if(urlPrefix === null || urlPrefix === "" || urlPrefix === undefined) {
               urlPrefix = "https://www.baidu.com/s?ie=UTF-8&wd="
             }
             //layer.msg(urlPrefix+$("#search_input").val()+urlSuffix)
@@ -75,6 +75,8 @@
   </script>
 </head>
 <body>
+<input type="hidden" id="searchUrlPrefix">
+<input type="hidden" id="searchUrlSuffix">
 <div class="layui-container scroll_div">
   <!--digital_clock-->
   <div class="layui-row layui-anim layui-anim-fadein">
@@ -152,6 +154,27 @@
       <a class="layui-btn layui-btn-radius layui-btn-primary" th:href="@{/admin}" style="margin-top: 10px">进入管理</a>
     </div>
   </div>
+  <!--project-->
+  <div class="layui-row layui-col-space30" style="margin-top: 20px">
+    <div class="layui-col-md4" th:each="project : ${projects}">
+      <div class="layui-card link_card_box">
+        <div class="layui-row">
+          <div class="layui-col-md4">
+            <div class="layui-row project_name">
+              <span th:text="${project.name}"></span>
+            </div>
+            <div class="layui-row project_a">
+              <a th:href="${project.url}" target="_blank" style="color: #1E9FFF">GO项目</a>|
+              <a th:href="${project.git}" target="_blank" style="color: #ff0c0c">去GITHUB</a>
+            </div>
+          </div>
+          <div class="layui-col-md8 project_desc">
+            <span th:text="${project.describes}" style="padding: 5px"></span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div><hr class="layui-border-blue" style="margin-top: 10px">
   <!--link_list-->
   <div class="layui-row layui-col-space30" style="margin-top: 20px">
     <div class="layui-col-md4" th:each="linkGroup : ${linkGroups}">
@@ -289,5 +312,29 @@
   span {
     cursor: url(https://cdn.jsdelivr.net/gh/moezx/cdn@3.1.9/img/Sakura/cursor/No_Disponible.cur), auto;
   }
+
+  /*项目列表*/
+  .project_name{
+    font-size: 20px;
+    font-weight: 600;
+  }
+  .project_a{
+    margin-top: 10px;
+  }
+  .project_desc{
+    text-align: center;
+    background-color: #f2f2f2;
+    padding: 5px;
+    border-radius: 8px;
+  }
+  .fg:after{
+    content: " ";
+
+    border-left: 1px solid #000;
+
+    height: auto;
+  }
+
+
 
 </style>
